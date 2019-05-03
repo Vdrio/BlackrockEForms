@@ -256,7 +256,7 @@ namespace VdrioEForms.Filters
                 ComparisonPicker.SelectedItem = "Equal to";
                 valuePicker = new Picker();
                 Debug.WriteLine("We got " + CurrentUsers.Count + " users");
-                foreach (EFUser u in CurrentUsers)
+                foreach (EFUser u in CurrentUsers.FindAll(x=>x.UserType != 2))
                 {
                     valuePicker.Items.Add(u.FirstName + " " + u.LastName);
                 }
