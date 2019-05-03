@@ -43,18 +43,9 @@ namespace VdrioEForms.Edit
                     d.dataEntry.EncryptEntry();
                     entries.Add(d.dataEntry);
                 }
-                EFForm formToSubmit = new EFForm
-                {
-                    FormName = SelectedForm.FormName,
-                    Created = DateTime.Now,
-                    LastModified = DateTime.Now,
-                    Entries = entries,
-                    TableName = SelectedForm.TableName,
-                    OriginalUser = LoginPage.CurrentUser,
-                    LastModifiedUser = LoginPage.CurrentUser
-                };
-                await AzureTableManager.UpdateFormSubmission(formToSubmit);
-                if (await AzureTableManager.UpdateFormSubmission(SelectedForm) != null)
+                SelectedForm.Entries = entries;
+                EFForm f = await AzureTableManager.UpdateFormSubmission(SelectedForm);
+                if (f != null)
                 {
                     await DisplayAlert("Updated", "Update successful", "Ok");
                     await EFMasterPage.MainPage.Detail.Navigation.PopAsync();
@@ -98,6 +89,11 @@ namespace VdrioEForms.Edit
             DeleteRestoreButton.IsEnabled = true;
         }
 
+        void ShowDeletedToggled(object sender, EventArgs e)
+        {
+            SelectedFormChanged();
+        }
+
         void SelectedFormChanged()
         {
             MainStack.Children.Clear();
@@ -105,7 +101,7 @@ namespace VdrioEForms.Edit
             if (formToFill != null)
             {
                 SelectedForm = formToFill;
-                MainStack.Children.Add(EFEntryToLayout.CreateEditEntryLayout(formToFill, MainForm));
+                MainStack.Children.Add(EFEntryToLayout.CreateEditEntryLayout(formToFill, MainForm, ShowDeletedSwitch.IsToggled));
             }
 
         }

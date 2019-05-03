@@ -39,7 +39,10 @@
 				<Switch HorizontalOptions="Start" VerticalOptions="FillAndExpand" x:Name="ShowDeletedDataSwitch" Toggled="ShowDeletedToggled"/>
 				
 			</StackLayout>
-			<Button HorizontalOptions="EndAndExpand" Text="Export Excel Doc" Clicked="ExportToExcelClicked" x:Name="ExportButton"/>
+			<StackLayout Orientation="Horizontal">
+				<Button HorizontalOptions="Start" Text="Sort By" Clicked="SortByClicked"/>
+				<Button HorizontalOptions="EndAndExpand" Text="Export Excel Doc" Clicked="ExportToExcelClicked" x:Name="ExportButton"/>
+			</StackLayout>
 			<ScrollView x:Name="MainVerticalScroll">
 				<StackLayout Orientation="Horizontal" Spacing="0">
 					<StackLayout Orientation="Vertical" WidthRequest="75" x:Name="ButtonStack" Spacing="0"/>

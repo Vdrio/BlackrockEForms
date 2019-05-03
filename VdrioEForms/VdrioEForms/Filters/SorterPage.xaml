@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VdrioEForms.Filters.SorterPage"
+			 Title="Sort By"
+			 BackgroundColor="#cdcdcd">
+    <ContentPage.Content>
+		<StackLayout>
+			<StackLayout Orientation="Horizontal" VerticalOptions="Start">
+				<Label HorizontalOptions ="Start" VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" FontSize="Medium"
+				   Text="Sort by: "/>
+				<Picker HorizontalOptions="FillAndExpand" FontSize="Medium" x:Name="OrderPicker"/>
+				<Picker HorizontalOptions="FillAndExpand" FontSize="Medium" x:Name="EntryPicker"/>
+			</StackLayout>
+			<Button HorizontalOptions="FillAndExpand" Text="Sort" Clicked="SortClicked"/>
+			<Button HorizontalOptions="FillAndExpand" Text="Reset to Default" Clicked="DefaultClicked"/>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

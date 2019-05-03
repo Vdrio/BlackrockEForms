@@ -10,7 +10,7 @@ namespace VdrioEForms.Layouts
 {
     public class EFEntryToLayout
     {
-        public static StackLayout CreateEntryLayout(EFForm form)
+        public static StackLayout CreateEntryLayout(EFForm form, bool showDeleted = false)
         {
             List<EFEntry> entries = form.Entries;
             List<EFEntry> dEntries = form.Entries;
@@ -27,7 +27,7 @@ namespace VdrioEForms.Layouts
                     AddUserEntry(e, layout);
                 }
             }
-            if (dEntries != null)
+            if (dEntries != null && showDeleted)
             {
                 foreach(EFEntry e in dEntries)
                 {
@@ -51,9 +51,10 @@ namespace VdrioEForms.Layouts
 
         }
 
-        public static StackLayout CreateEditEntryLayout(EFForm form, EFForm baseForm)
+        public static StackLayout CreateEditEntryLayout(EFForm form, EFForm baseForm, bool includeDeleted = false)
         {
-            List<EFEntry> entries = form.Entries;
+            List<EFEntry> entries = baseForm.Entries.FindAll(x => !x.Deleted);
+            List<EFEntry> dEntries = baseForm.Entries.FindAll(x=>x.Deleted);
             Debug.WriteLine("converted entries");
             StackLayout layout = new StackLayout { Orientation = StackOrientation.Vertical };
             if (entries != null)
@@ -63,13 +64,39 @@ namespace VdrioEForms.Layouts
                 {
                     //e.DecryptEntry();
                     //baseForm.Entries[count].DecryptEntry();
-                    if (baseForm.Entries.FindAll(x=>x.Deleted).Find(x=>x.EntryID == e.EntryID) != null)
+                    EFEntry entryToUse = form.Entries.Find(x => x.EntryID == e.EntryID);
+                    if (entryToUse == null)
                     {
-                        e.EntryName += "(Deleted)";
+                        entryToUse = new EFEntry { EntryID = e.EntryID,EntryType= e.EntryType, EntryName = e.EntryName, EntryData = "man set data" };
+                        entryToUse.EntryID = e.EntryID;
+                        Debug.WriteLine("Proper ID: " + e.EntryID + "My ID: " + entryToUse.EntryID);
                     }
-                    AddEditEntry(e,baseForm,layout);
+                    AddEditEntry(entryToUse, baseForm, layout);
+                    //AddEditEntry(form.Entries.Find(x=>x.EntryID == e.EntryID),baseForm,layout);
 
                     count++;
+                }
+                if (includeDeleted)
+                {
+                    foreach (EFEntry e in dEntries)
+                    {
+                        //e.DecryptEntry();
+                        //baseForm.Entries[count].DecryptEntry();
+                        
+                        EFEntry entryToUse = form.Entries.Find(x => x.EntryID == e.EntryID);
+                        if (entryToUse != null)
+                        {
+                            entryToUse.EntryName += "(Deleted)";
+                        }
+                        else
+                        {
+                            entryToUse = new EFEntry { EntryID = e.EntryID, EntryType = e.EntryType, EntryName = e.EntryName, EntryData = "" };
+                            entryToUse.EntryID = e.EntryID;
+                        }
+                        AddEditEntry(entryToUse, baseForm, layout);
+
+                        count++;
+                    }
                 }
             }
             return layout;

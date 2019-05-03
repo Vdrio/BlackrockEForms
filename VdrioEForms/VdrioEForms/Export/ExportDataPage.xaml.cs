@@ -19,6 +19,7 @@ namespace VdrioEForms.Export
 	{
         public static List<EFForm> Forms;
         public static List<EFForm> FilteredForms;
+        public static Sorter CurrentSorter;
         public static EFForm SelectedForm;
         public static List<Filter> CurrentFilters;
         public DateTime fromTime = DateTime.Today;
@@ -120,6 +121,15 @@ namespace VdrioEForms.Export
                 {
                     submissions = submissions.FindAll(x => !x.Deleted);
                 }
+
+                if (CurrentSorter != null)
+                {
+                    submissions = Sorter.SortSubmissions(submissions, CurrentSorter);
+                }
+                else
+                {
+                    submissions = submissions.OrderByDescending(x => x.TimeInTicks).ToList();
+                }
                 FilteredForms = submissions;
                 FormSubmissionLayout layout = FormSubmissionLayout.CreateTitleLayout(SelectedForm, ShowDeletedSwitch.IsToggled);
                 StackLayout itemLayout = FormSubmissionLayout.CreateItemsLayout(submissions, SelectedForm, ShowDeletedSwitch.IsToggled);
@@ -135,9 +145,14 @@ namespace VdrioEForms.Export
 
         }
 
+        void SortByClicked(object sender, EventArgs e)
+        {
+            EFMasterPage.MainPage.Detail.Navigation.PushAsync(new SorterPage(SelectedForm));
+        }
+
         void ExportToExcelClicked(object sender, EventArgs e)
         {
-            ExportToExcel.CreateAndOpenExcelDoc(SelectedForm, FilteredForms,CurrentFilters,fromTime, toTime, ShowDeletedSwitch.IsToggled);
+            ExportToExcel.CreateAndOpenExcelDoc(SelectedForm, FilteredForms,CurrentFilters,CurrentSorter,fromTime, toTime, ShowDeletedSwitch.IsToggled);
         }
 
         public void ShowDeletedToggled(object sender, EventArgs e)

@@ -6,6 +6,12 @@
 			 BackgroundColor="#cdcdcd">
 	<ContentPage.Content>
 		<StackLayout VerticalOptions="FillAndExpand" Orientation="Vertical" BackgroundColor="#cdcdcd">
+			<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+				<Label Text="Show Deleted Entries "
+					VerticalOptions="FillAndExpand" FontSize="Medium" Margin="4,0,0,0"
+					HorizontalOptions="Start" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
+				<Switch HorizontalOptions="Start" VerticalOptions="FillAndExpand" x:Name="ShowDeletedSwitch" Toggled="ShowDeletedToggled"/>
+			</StackLayout>
 			<ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" x:Name="ContentScroll">
 				<StackLayout x:Name="MainStack" Orientation="Vertical" VerticalOptions="FillAndExpand"/>
 			</ScrollView>

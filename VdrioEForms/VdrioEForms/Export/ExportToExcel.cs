@@ -13,7 +13,7 @@ namespace VdrioEForms.Export
 {
     public class ExportToExcel
     {
-        public static async void CreateAndOpenExcelDoc(EFForm baseForm, List<EFForm> formsToLoad,List<Filter> filters, DateTime from, DateTime to, bool showDeletedColumns = false)
+        public static async void CreateAndOpenExcelDoc(EFForm baseForm, List<EFForm> formsToLoad,List<Filter> filters, Sorter sorter, DateTime from, DateTime to, bool showDeletedColumns = false)
         {
             string shortFileName = baseForm.FormName.Replace(" ", "") + DateTime.Now.ToString("MMddyyyHHmmss") + ".xlsx";
             string fileName = Path.Combine(EFStorage.appDataBasePath, "Files", shortFileName);
@@ -112,6 +112,22 @@ namespace VdrioEForms.Export
                     filterString += f.Entry.EntryName + " " + Filter.ComparisonTypeToString(f.Comparison) + " " + f.Entry.EntryData;
                     cell.SetCellValue(filterString);
                     fCount++;
+                }
+                if (sorter != null)
+                {
+                    cell = row2.CreateCell(fCount);
+                    cell.CellStyle = boldStyle;
+                    string filterString = "Sorted By ";
+                    if (sorter.Comparison == Sorter.ComparisonType.Descending)
+                    {
+                        filterString += "Descending ";
+                    }
+                    else
+                    {
+                        filterString += "Ascending ";
+                    }
+                    filterString += sorter.Entry.EntryName;
+                    cell.SetCellValue(filterString);
                 }
                 
                 int count = 0;

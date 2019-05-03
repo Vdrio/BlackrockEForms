@@ -53,6 +53,12 @@ namespace VdrioEForms
             FormPicker.SelectedIndex = 0;
         }
 
+        void ShowDeletedToggled(object sender, EventArgs e)
+        {
+
+            SelectedFormChanged(sender, e);
+        }
+
         void SelectedFormChanged(object sender, EventArgs e)
         {
             if (Forms != null)
@@ -62,11 +68,11 @@ namespace VdrioEForms
                 if (formToFill != null)
                 {
                     SelectedForm = formToFill;
-                    MainStack.Children.Add(EFEntryToLayout.CreateEntryLayout(formToFill));
+                    MainStack.Children.Add(EFEntryToLayout.CreateEntryLayout(formToFill, ShowDeletedSwitch.IsToggled));
                 }
 
             }
-           // CheckEntries();
+            // CheckEntries();
         }
 
         public async void AddDataClicked(object sender, EventArgs e)
@@ -94,7 +100,7 @@ namespace VdrioEForms
                 if (await AzureTableManager.AddFormSubmission(formToSubmit) != null)
                 {
                     await DisplayAlert("Submitted", "Form submitted succesfully", "Ok");
-                    EFMasterPage.MainPage.Detail = new NavigationPage(new FillOutPage());
+                    SelectedFormChanged(sender, e);
                 }
                 else
                 {

@@ -20,6 +20,7 @@ namespace VdrioEForms.Edit
         public static List<EFForm> Forms;
         public static EFForm SelectedForm;
         public static List<Filter> CurrentFilters;
+        public static Sorter CurrentSorter;
         public DateTime fromTime = DateTime.Today;
         public DateTime toTime = DateTime.Today + TimeSpan.FromDays(1) - TimeSpan.FromTicks(1);
         public static int lastSelectedIndex = 0;
@@ -38,6 +39,11 @@ namespace VdrioEForms.Edit
             FromPicker.PropertyChanged += FromDateChanged;
             ToPicker.PropertyChanged += ToDateChanged;
             pageLoading = false;
+        }
+
+        void SortByClicked(object sender, EventArgs e)
+        {
+            EFMasterPage.MainPage.Detail.Navigation.PushAsync(new SorterPage(SelectedForm));
         }
 
         public void FromDateChanged(object sender, EventArgs e)
@@ -120,6 +126,15 @@ namespace VdrioEForms.Edit
                 if (!ShowDeletedDataSwitch.IsToggled)
                 {
                     submissions = submissions.FindAll(x => !x.Deleted);
+                }
+
+                if (CurrentSorter != null)
+                {
+                    submissions = Sorter.SortSubmissions(submissions, CurrentSorter);
+                }
+                else
+                {
+                    submissions = submissions.OrderByDescending(x => x.TimeInTicks).ToList();
                 }
 
                 FormSubmissionLayout layout = FormSubmissionLayout.CreateTitleLayout(SelectedForm, ShowDeletedSwitch.IsToggled);
