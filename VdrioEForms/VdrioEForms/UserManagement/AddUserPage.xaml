@@ -8,25 +8,25 @@
         <StackLayout>
 			<StackLayout Orientation="Horizontal" VerticalOptions="Start">
 				<Label Text="E-Mail (Required):"
-                VerticalOptions="Start" VerticalTextAlignment="Center" FontSize="Medium"
+                VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" FontSize="Medium"
 					   HorizontalOptions="Start" />
 				<Entry HorizontalOptions="FillAndExpand" FontSize="Medium" Placeholder="E-Mail" x:Name="EmailEntry"/>
 			</StackLayout>
 			<StackLayout Orientation="Horizontal" VerticalOptions="Start">
 				<Label Text="User Type:"
-                VerticalOptions="Start" VerticalTextAlignment="Center" FontSize="Medium"
+                VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" FontSize="Medium"
 					   HorizontalOptions="Start" />
 				<Picker HorizontalOptions="FillAndExpand" FontSize="Medium" x:Name="UserTypePicker"/>
 			</StackLayout>
 			<StackLayout Orientation="Horizontal" VerticalOptions="Start">
 				<Label Text="First Name (Optional):"
-                VerticalOptions="Start" VerticalTextAlignment="Center" FontSize="Medium"
+                VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" FontSize="Medium"
 					   HorizontalOptions="Start" />
 				<Entry HorizontalOptions="FillAndExpand" FontSize="Medium" Placeholder="Optional" x:Name="FirstNameEntry"/>
 			</StackLayout>
 			<StackLayout Orientation="Horizontal" VerticalOptions="Start">
 				<Label Text="Last Name (Optional):"
-                VerticalOptions="Start" VerticalTextAlignment="Center" FontSize="Medium"
+                VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" FontSize="Medium"
 					   HorizontalOptions="Start" />
 				<Entry HorizontalOptions="FillAndExpand" FontSize="Medium" Placeholder="Optional" x:Name="LastNameEntry"/>
 			</StackLayout>
