@@ -6,7 +6,7 @@
 			 BackgroundColor="White">
     <ContentPage.Content>
 		<StackLayout VerticalOptions="CenterAndExpand">
-			<Image Source="BlackrockLogo.png" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand"/>
+			<Image Source="BlackrockLogo.png" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" WidthRequest="600"/>
 			<Label Text="Username/Email" FontSize="20" FontAttributes="Bold" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" TextColor="Black" VerticalTextAlignment="Center"
 					   x:Name="UserNameLabel"/>
 			<Entry Placeholder="Username or Email" VerticalOptions="CenterAndExpand" FontSize="20" x:Name="UserEntry" WidthRequest="500"/>
