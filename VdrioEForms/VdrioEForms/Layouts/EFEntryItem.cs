@@ -100,7 +100,7 @@ namespace VdrioEForms.Layouts
                     VerticalTextAlignment = TextAlignment.Center,
                     Text = entry.Units
                     ,
-                    HorizontalOptions = LayoutOptions.FillAndExpand
+                    HorizontalOptions = LayoutOptions.Start
                 });
             }
         }
