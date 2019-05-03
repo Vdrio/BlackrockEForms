@@ -44,6 +44,7 @@ namespace VdrioEForms.Edit
                     entries.Add(d.dataEntry);
                 }
                 SelectedForm.Entries = entries;
+                SelectedForm.LastModifiedUser = LoginPage.CurrentUser;
                 EFForm f = await AzureTableManager.UpdateFormSubmission(SelectedForm);
                 if (f != null)
                 {
