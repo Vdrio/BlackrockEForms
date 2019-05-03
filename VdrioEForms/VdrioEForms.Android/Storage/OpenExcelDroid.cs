@@ -13,6 +13,10 @@ using Android.Widget;
 using VdrioEForms.Storage;
 using Plugin.Permissions;
 using System.Threading.Tasks;
+using Android.Support.V4.App;
+using Android;
+using Android.Support.V4.Content;
+using Android.Content.PM;
 
 namespace VdrioEForms.Droid.Storage
 {
@@ -21,19 +25,20 @@ namespace VdrioEForms.Droid.Storage
         string baseExternal = Android.OS.Environment.ExternalStorageDirectory.ToString();
         public async Task<string> CreateExternalFile(string shortFileName)
         {
-            CreateDirectory("BlackrockLogisticsEForms", "Files");
+            
             //var file = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDocuments);
-            if (await CrossPermissions.Current.CheckPermissionStatusAsync(Plugin.Permissions.Abstractions.Permission.Storage)
-                == Plugin.Permissions.Abstractions.PermissionStatus.Granted)
+            if (await HasStoragePermission())
             {
+                CreateDirectory("BlackrockLogisticsEForms", "Files");
                 File.Create(Path.Combine(baseExternal, "BlackrockLogisticsEForms", "Files", shortFileName)).Dispose();
                 return Path.Combine(baseExternal, "BlackrockLogisticsEForms", "Files", shortFileName);
             }
             else
             {
+                await RequestStoragePermission();
                 Dictionary<Plugin.Permissions.Abstractions.Permission, Plugin.Permissions.Abstractions.PermissionStatus> granted = new Dictionary<Plugin.Permissions.Abstractions.Permission, Plugin.Permissions.Abstractions.PermissionStatus>();
                 granted.Add(Plugin.Permissions.Abstractions.Permission.Storage, Plugin.Permissions.Abstractions.PermissionStatus.Granted);
-                if (await CrossPermissions.Current.RequestPermissionsAsync(Plugin.Permissions.Abstractions.Permission.Storage) == granted)
+                if (await HasStoragePermission())//CrossPermissions.Current.RequestPermissionsAsync(Plugin.Permissions.Abstractions.Permission.Storage) == granted)
                 {
                     File.Create(Path.Combine(baseExternal, "BlackrockLogisticsEForms", "Files", shortFileName)).Dispose();
                     return Path.Combine(baseExternal, "BlackrockLogisticsEForms", "Files", shortFileName);
@@ -57,6 +62,26 @@ namespace VdrioEForms.Droid.Storage
             return directoryPath;
         }
 
+        Task<bool> HasStoragePermission()
+        {
+            return Task.Run(() =>
+            {
+                if (ContextCompat.CheckSelfPermission(MainActivity.activity.ApplicationContext, Manifest.Permission.WriteExternalStorage) == (int)Permission.Granted)
+                {
+                    return true;
+                }
+                return false;
+            });
+        }
+
+        public Task RequestStoragePermission()
+        {
+            return Task.Run(() =>
+            {
+                ActivityCompat.RequestPermissions(MainActivity.activity, new String[] { Manifest.Permission.WriteExternalStorage, Manifest.Permission.ReadExternalStorage },
+                        0);
+            });
+        }
 
         public void OpenExcelDoc(string fileName)
         {

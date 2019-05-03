@@ -28,6 +28,7 @@ namespace VdrioEForms.Edit
         bool pageLoading = false, itemsLoading = false;
         public EditSubmissionsPage ()
 		{
+            CurrentSorter = null;
             pageLoading = true;
             SelectedForm = null;
 			InitializeComponent ();
@@ -171,6 +172,7 @@ namespace VdrioEForms.Edit
 
         void SelectedFormChanged(object sender, EventArgs e)
         {
+            CurrentSorter = null;
             if (Forms != null)
             {
                 HorizontalContent.Children.Clear();

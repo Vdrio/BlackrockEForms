@@ -29,6 +29,7 @@ namespace VdrioEForms.Export
         bool pageLoading = false, itemsLoading = false;
         public ExportDataPage()
         {
+            CurrentSorter = null;
             pageLoading = true;
             SelectedForm = null;
             InitializeComponent();
@@ -176,6 +177,7 @@ namespace VdrioEForms.Export
 
         void SelectedFormChanged(object sender, EventArgs e)
         {
+            CurrentSorter = null;
             if (Forms != null)
             {
                 HorizontalContent.Children.Clear();
