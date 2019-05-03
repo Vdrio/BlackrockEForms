@@ -237,10 +237,10 @@ namespace VdrioEForms.Azure
                 {
                     InitializeClientService();
                 }
-                List<EFUser> users = await GetAllUsers();
+                List<EFUser> users = await GetAllUsers(true);
                 if (users.Find(x => x.RowKey!=user.RowKey&&(x.UserName == user.UserName || x.Email == user.Email)) != null)
                 {
-                    Debug.WriteLine("User already exists");
+                    Debug.WriteLine("Username or email taken");
                     return null;
                 }
 
@@ -256,7 +256,7 @@ namespace VdrioEForms.Azure
             }
         }
 
-        public static async Task<EFUser> GetUser(string userName = "", string email = "")
+        public static async Task<EFUser> GetUser(string userName = "", string email = "", bool retrying = false)
         {
             
             Debug.WriteLine("Getting a user");
@@ -287,8 +287,36 @@ namespace VdrioEForms.Azure
 
 
                 TableContinuationToken token = null;
-                List<EFUser> users = await GetAllUsers();
-                return users.Find(x=>x.UserName == id || x.Email == id);
+                List<EFUser> users = await GetAllUsers(true);
+                EFUser u = users.Find(x => x.UserName == id || x.Email == id);
+                if (u!= null)
+                {
+                    return u;
+                }
+                if (!retrying)
+                {
+                    if (IsAppTester)
+                    {
+                        InitializeClientService();
+                    }
+                    else
+                    {
+                        InitializeAppTesterService();
+                    }
+                    return await GetUser(userName, email, true);
+                }
+                else
+                {
+                    if (IsAppTester)
+                    {
+                        InitializeClientService();
+                    }
+                    else
+                    {
+                        InitializeAppTesterService();
+                    }
+                    return null;
+                }
             }
             catch (Exception ex)
             {

@@ -80,11 +80,11 @@ namespace VdrioEForms.UserManagement
             }
             if (SelectedUser.Deleted)
             {
-                DeleteButton.Text = "Restore";
+                DeleteButton.Text = "Restore User";
             }
             else
             {
-                DeleteButton.Text = "Delete";
+                DeleteButton.Text = "Delete User";
             }
         }
 
@@ -123,43 +123,46 @@ namespace VdrioEForms.UserManagement
 
         public async void DeleteClicked(object sender, EventArgs e)
         {
-            AddButton.IsEnabled = false;
-            DeleteButton.IsEnabled = false;
-            int userType = UserTypePicker.SelectedIndex;
-            if (SelectedUser.UserType == 4)
+            if (await DisplayAlert("Delete User", "Are you sure you want to delete user?", "Yes", "No"))
             {
-                userType += 3;
-            }
-            if (!string.IsNullOrEmpty(EmailEntry.Text))
-            {
-                SelectedUser.Email = EmailEntry.Text;
-                SelectedUser.UserName = UserEntry.Text;
-                SelectedUser.FirstName = FirstNameEntry.Text;
-                SelectedUser.LastName = LastNameEntry.Text;
-                if (SelectedUser.Deleted)
+                AddButton.IsEnabled = false;
+                DeleteButton.IsEnabled = false;
+                int userType = UserTypePicker.SelectedIndex;
+                if (SelectedUser.UserType == 4)
                 {
-                    SelectedUser.Deleted = false;
+                    userType += 3;
+                }
+                if (!string.IsNullOrEmpty(EmailEntry.Text))
+                {
+                    SelectedUser.Email = EmailEntry.Text;
+                    SelectedUser.UserName = UserEntry.Text;
+                    SelectedUser.FirstName = FirstNameEntry.Text;
+                    SelectedUser.LastName = LastNameEntry.Text;
+                    if (SelectedUser.Deleted)
+                    {
+                        SelectedUser.Deleted = false;
+                    }
+                    else
+                    {
+                        SelectedUser.Deleted = true;
+                    }
+                    if (await AzureTableManager.UpdateUser(SelectedUser) != null)
+                    {
+                        await DisplayAlert("Success", "User updated successfully", "Ok");
+                        await EFMasterPage.MainPage.Detail.Navigation.PopAsync();
+                    }
+                    else
+                    {
+                        await DisplayAlert("Failed", "Failed to update user", "Ok");
+                    }
                 }
                 else
                 {
-                    SelectedUser.Deleted = true;
+                    await DisplayAlert("Failed", "E-Mail address required for user.", "Ok");
                 }
-                if (await AzureTableManager.UpdateUser(SelectedUser) != null)
-                {
-                    await DisplayAlert("Success", "User updated successfully", "Ok");
-                    await EFMasterPage.MainPage.Detail.Navigation.PopAsync();
-                }
-                else
-                {
-                    await DisplayAlert("Failed", "Failed to update user", "Ok");
-                }
+                AddButton.IsEnabled = true;
+                DeleteButton.IsEnabled = true;
             }
-            else
-            {
-                await DisplayAlert("Failed", "E-Mail address required for user.", "Ok");
-            }
-            AddButton.IsEnabled = true;
-            DeleteButton.IsEnabled = true;
         }
 
         public void ShowDeletedToggled(object sender, EventArgs e)

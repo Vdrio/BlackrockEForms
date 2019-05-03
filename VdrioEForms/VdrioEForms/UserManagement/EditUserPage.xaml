@@ -49,7 +49,7 @@
 				<Entry HorizontalOptions="FillAndExpand" FontSize="Medium" Placeholder="Optional" x:Name="LastNameEntry"/>
 			</StackLayout>
 			<Button VerticalOptions="End" HorizontalOptions="FillAndExpand" Text="Update User" x:Name="AddButton" Clicked="UpdateClicked"/>
-			<Button VerticalOptions="End" HorizontalOptions="FillAndExpand" Text="Delete" x:Name="DeleteButton" Clicked="DeleteClicked"/>
+			<Button VerticalOptions="End" HorizontalOptions="FillAndExpand" Text="Delete User" x:Name="DeleteButton" Clicked="DeleteClicked"/>
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

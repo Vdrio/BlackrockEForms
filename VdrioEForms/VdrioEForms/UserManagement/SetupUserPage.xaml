@@ -7,42 +7,42 @@
 		<StackLayout>
 			<StackLayout Orientation="Horizontal" VerticalOptions="Start">
 				<Label Text="E-Mail:"
-                VerticalOptions="Start" VerticalTextAlignment="Center" FontSize="Medium"
+                VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" FontSize="Medium"
 					   HorizontalOptions="Start" />
 				<Entry HorizontalOptions="FillAndExpand" FontSize="Medium" Placeholder="E-Mail" x:Name="EmailEntry" IsEnabled="False"/>
 			</StackLayout>
 			<StackLayout Orientation="Horizontal" VerticalOptions="Start">
 				<Label Text="Username:"
-                VerticalOptions="Start" VerticalTextAlignment="Center" FontSize="Medium"
+                VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" FontSize="Medium"
 					   HorizontalOptions="Start" />
 				<Entry HorizontalOptions="FillAndExpand" FontSize="Medium" Placeholder="Username" x:Name="UserEntry"/>
 			</StackLayout>
 			<StackLayout Orientation="Horizontal" VerticalOptions="Start">
 				<Label Text="First Name:"
-                VerticalOptions="Start" VerticalTextAlignment="Center" FontSize="Medium"
+                VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" FontSize="Medium"
 					   HorizontalOptions="Start" />
 				<Entry HorizontalOptions="FillAndExpand" FontSize="Medium" Placeholder="First Name" x:Name="FirstNameEntry"/>
 			</StackLayout>
 			<StackLayout Orientation="Horizontal" VerticalOptions="Start">
 				<Label Text="Last Name:"
-                VerticalOptions="Start" VerticalTextAlignment="Center" FontSize="Medium"
+                VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" FontSize="Medium"
 					   HorizontalOptions="Start" />
 				<Entry HorizontalOptions="FillAndExpand" FontSize="Medium" Placeholder="Last Name" x:Name="LastNameEntry"/>
 			</StackLayout>
 			<StackLayout Orientation="Horizontal" VerticalOptions="Start">
 				<Label Text="Password: "
-                VerticalOptions="Start" VerticalTextAlignment="Center" FontSize="Medium"
+                VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" FontSize="Medium"
 					   HorizontalOptions="Start" />
 				<Entry HorizontalOptions="FillAndExpand" FontSize="Medium" Placeholder="Password" IsPassword="True" x:Name="PasswordEntry"/>
 			</StackLayout>
 			<StackLayout Orientation="Horizontal" VerticalOptions="Start">
 				<Label Text="Confirm Password: "
-                VerticalOptions="Start" VerticalTextAlignment="Center" FontSize="Medium"
+                VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" FontSize="Medium"
 					   HorizontalOptions="Start" />
 				<Entry HorizontalOptions="FillAndExpand" FontSize="Medium" Placeholder="Confirm Password" IsPassword="True" x:Name="ConfirmPasswordEntry"/>
 			</StackLayout>
 			<Button Text="Setup User" Clicked="SetupClicked" x:Name="SetupButton"/>
-			<Label Text="" HorizontalOptions="Center" x:Name="FeedbackText" VerticalOptions="Start"/>
+			<Label Text="" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" x:Name="FeedbackText" VerticalOptions="Start"/>
 		</StackLayout>
     </ContentPage.Content>
 </ContentPage>
