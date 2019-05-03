@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VdrioEForms.Create.CreateEFEntryPage"
+			 Title="Add Entry"
+			 BackgroundColor="#cdcdcd">
+	<ContentPage.Content>
+		<StackLayout >
+			<StackLayout Orientation="Horizontal">
+				<Label Text="Entry Input Type: " VerticalTextAlignment="Center" FontSize="Medium"/>
+				<Picker x:Name="inputPicker" HorizontalOptions="FillAndExpand" SelectedIndexChanged="PickerSelectionChanged"/>
+			</StackLayout>
+			<StackLayout Orientation="Horizontal">
+				<Label Text="Entry Name: " VerticalTextAlignment="Center" FontSize="Medium"/>
+				<Entry Placeholder="New Entry" HorizontalOptions="FillAndExpand" x:Name="NameEntry" TextChanged="NameEntryTextChanged"/>
+			</StackLayout>
+			<StackLayout x:Name="MainStack">
+
+			</StackLayout>
+			<Button Text ="Add Entry" Clicked="AddEntryClicked"/>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

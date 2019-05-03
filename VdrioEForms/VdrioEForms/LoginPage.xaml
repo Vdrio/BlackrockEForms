@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VdrioEForms.LoginPage"
+			 Title="E-Forms Login"
+			 BackgroundColor="White">
+    <ContentPage.Content>
+		<StackLayout VerticalOptions="CenterAndExpand">
+			<Image Source="BlackrockLogo.png" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand"/>
+			<Label Text="Username/Email" FontSize="20" FontAttributes="Bold" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" TextColor="Black" VerticalTextAlignment="Center"
+					   x:Name="UserNameLabel"/>
+			<Entry Placeholder="Username or Email" VerticalOptions="CenterAndExpand" FontSize="20" x:Name="UserEntry" WidthRequest="500"/>
+			<Label Text="Password" FontAttributes="Bold" VerticalOptions="CenterAndExpand" FontSize="20" HorizontalOptions="Center" TextColor="Black" VerticalTextAlignment="Center"
+					   x:Name="PasswordLabel"/>
+			<Entry Placeholder="Password" VerticalOptions="CenterAndExpand" FontSize="20" x:Name="PasswordEntry" IsPassword="True" WidthRequest="500"/>
+			
+			<StackLayout Orientation="Horizontal">
+				<Label Text="Show Passwords " HorizontalOptions="Start" TextColor="Black" VerticalOptions="Center" FontSize="17"/>
+				<Switch x:Name="ShowPassPhraseSwitch" Toggled="ShowPasswordSwitched" HorizontalOptions="Start"/>
+			</StackLayout>
+			<StackLayout Orientation="Horizontal">
+				<Label Text="Remember login info " HorizontalOptions="Start" TextColor="Black" VerticalOptions="Center" FontSize="17"/>
+				<Switch x:Name="SaveLoginInfoSwitch" Toggled="SaveLoginInfoSwitched" HorizontalOptions="Start"/>
+			</StackLayout>
+			
+			<Button Text="Login" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" Clicked="LoginClicked"/>
+			<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+				<Label Text="First time logging in? " Margin="3,0,0,0" HorizontalTextAlignment="End" HorizontalOptions="Start" TextColor="Black" VerticalOptions="Center" FontSize="17"/>
+				<Label Text="Setup Here " HorizontalOptions="Start" FontAttributes="Bold" TextColor="Blue" VerticalOptions="Center" FontSize="17">
+					<Label.GestureRecognizers>
+						<TapGestureRecognizer Tapped="SetupClicked"/>
+					</Label.GestureRecognizers>
+				</Label>
+
+			</StackLayout>
+			<Label Text="" HorizontalOptions="Center" x:Name="FeedbackText" VerticalOptions="CenterAndExpand"/>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VdrioEForms.UserManagement.AddUserPage"
+			 Title="Add User"
+			 BackgroundColor="#cdcdcd">
+    <ContentPage.Content>
+        <StackLayout>
+			<StackLayout Orientation="Horizontal" VerticalOptions="Start">
+				<Label Text="E-Mail (Required):"
+                VerticalOptions="Start" VerticalTextAlignment="Center" FontSize="Medium"
+					   HorizontalOptions="Start" />
+				<Entry HorizontalOptions="FillAndExpand" FontSize="Medium" Placeholder="E-Mail" x:Name="EmailEntry"/>
+			</StackLayout>
+			<StackLayout Orientation="Horizontal" VerticalOptions="Start">
+				<Label Text="User Type:"
+                VerticalOptions="Start" VerticalTextAlignment="Center" FontSize="Medium"
+					   HorizontalOptions="Start" />
+				<Picker HorizontalOptions="FillAndExpand" FontSize="Medium" x:Name="UserTypePicker"/>
+			</StackLayout>
+			<StackLayout Orientation="Horizontal" VerticalOptions="Start">
+				<Label Text="First Name (Optional):"
+                VerticalOptions="Start" VerticalTextAlignment="Center" FontSize="Medium"
+					   HorizontalOptions="Start" />
+				<Entry HorizontalOptions="FillAndExpand" FontSize="Medium" Placeholder="Optional" x:Name="FirstNameEntry"/>
+			</StackLayout>
+			<StackLayout Orientation="Horizontal" VerticalOptions="Start">
+				<Label Text="Last Name (Optional):"
+                VerticalOptions="Start" VerticalTextAlignment="Center" FontSize="Medium"
+					   HorizontalOptions="Start" />
+				<Entry HorizontalOptions="FillAndExpand" FontSize="Medium" Placeholder="Optional" x:Name="LastNameEntry"/>
+			</StackLayout>
+			<Button VerticalOptions="End" HorizontalOptions="FillAndExpand" Text="Add User" x:Name="AddButton" Clicked="AddClicked"/>
+		</StackLayout>
+    </ContentPage.Content>
+</ContentPage>

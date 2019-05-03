@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:filters="clr-namespace:VdrioEForms.Filters"
+			 x:Class="VdrioEForms.Export.ExportDataPage"
+			 Title="Export Data"
+			 BackgroundColor="#cdcdcd">
+	<ContentPage.Content>
+		<StackLayout>
+			<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+				<Label Text="Form: "
+					VerticalOptions="FillAndExpand" FontSize="Medium" Margin="4,0,0,0"
+					HorizontalOptions="Start" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
+				<Picker HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" x:Name="FormPicker"/>
+			</StackLayout>
+			<StackLayout Orientation="Horizontal">
+				<Label Text="From: "
+					VerticalOptions="FillAndExpand" FontSize="Medium" Margin="4,0,0,0"
+					HorizontalOptions="Start" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
+				<DatePicker HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" x:Name="FromPicker"/>
+			</StackLayout>
+			<StackLayout Orientation="Horizontal">
+				<Label Text="To: "
+					VerticalOptions="FillAndExpand" FontSize="Medium" Margin="4,0,0,0"
+					HorizontalOptions="Start" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
+				<DatePicker HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" x:Name="ToPicker"/>
+			</StackLayout>
+			<filters:FilterButton HorizontalOptions="StartAndExpand" x:Name="FilterBtn"></filters:FilterButton>
+			<StackLayout Orientation="Horizontal">
+				<Label Text="Show Deleted Columns "
+					VerticalOptions="Start" FontSize="Medium" Margin="4,0,0,0"
+					HorizontalOptions="Start" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
+				<Switch HorizontalOptions="Start" VerticalOptions="FillAndExpand" x:Name="ShowDeletedSwitch" Toggled="ShowDeletedToggled"/>
+			</StackLayout>
+			<StackLayout Orientation="Horizontal">
+				<Label Text="Show Deleted Data "
+					VerticalOptions="Start" FontSize="Medium" Margin="4,0,0,0"
+					HorizontalOptions="Start" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
+				<Switch HorizontalOptions="Start" VerticalOptions="FillAndExpand" x:Name="ShowDeletedDataSwitch" Toggled="ShowDeletedToggled"/>
+				
+			</StackLayout>
+			<Button HorizontalOptions="EndAndExpand" Text="Export Excel Doc" Clicked="ExportToExcelClicked" x:Name="ExportButton"/>
+			<ScrollView x:Name="MainVerticalScroll">
+				<StackLayout Orientation="Horizontal" Spacing="0">
+					<StackLayout Orientation="Vertical" WidthRequest="75" x:Name="ButtonStack" Spacing="0"/>
+					<ScrollView x:Name="MainHorizontalScroll" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+						<StackLayout x:Name="HorizontalContent" Spacing="0"/>
+					</ScrollView>
+				</StackLayout>
+			</ScrollView>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

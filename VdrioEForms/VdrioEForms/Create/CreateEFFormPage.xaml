@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VdrioEForms.Create.CreateEFFormPage"
+			 Title="Create Form">
+	<ContentPage.Content>
+		<StackLayout Orientation="Vertical" BackgroundColor="#cdcdcd" Spacing="2">
+			<StackLayout Orientation="Horizontal">
+				<Label Text="Form Name: "
+                VerticalOptions="Center" 
+                HorizontalOptions="Start" FontSize="Medium"/>
+				<Entry HorizontalOptions="FillAndExpand" Text="New Form"  x:Name="NameEntry"/>
+			</StackLayout>
+			<StackLayout Orientation="Horizontal">
+				<Label Text="Entries" FontAttributes="Bold" HorizontalTextAlignment="Center"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" FontSize="Large"/>
+				<Button Text="Add Entry" HorizontalOptions="End" Clicked="AddDataEntryClicked" VerticalOptions="Center"/>
+			</StackLayout>
+			<BoxView HeightRequest="1" HorizontalOptions="FillAndExpand" BackgroundColor="Black" Margin="3"/>
+			<ScrollView VerticalOptions="FillAndExpand">
+				<StackLayout Orientation ="Vertical" x:Name="EntryStack">
+
+				</StackLayout>
+			</ScrollView>
+
+			<Button Text="Create Form" Clicked = "AddFormClicked"/>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

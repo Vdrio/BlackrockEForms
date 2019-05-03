@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VdrioEForms.UserManagement.EditUserPage"
+			 Title="Edit User"
+			 BackgroundColor="#cdcdcd">
+	<ContentPage.Content>
+		<StackLayout>
+			<StackLayout Orientation="Horizontal" VerticalOptions="Start">
+				<Label Text="User:"
+                VerticalOptions="Start" VerticalTextAlignment="Center" FontSize="Medium"
+					   HorizontalOptions="Start" />
+				<Picker HorizontalOptions="FillAndExpand" FontSize="Medium" x:Name="UserPicker"/>
+			</StackLayout>
+			<StackLayout Orientation="Horizontal" VerticalOptions="Start">
+				<Label Text="Show Deleted Users"
+                VerticalOptions="Start" VerticalTextAlignment="Center" FontSize="Medium"
+					   HorizontalOptions="Start" />
+				<Switch HorizontalOptions="FillAndExpand" x:Name="ShowDeletedSwitch" Toggled="ShowDeletedToggled"/>
+			</StackLayout>
+			<StackLayout Orientation="Horizontal" VerticalOptions="Start">
+				<Label Text="E-Mail:"
+                VerticalOptions="Start" VerticalTextAlignment="Center" FontSize="Medium"
+					   HorizontalOptions="Start" />
+				<Entry HorizontalOptions="FillAndExpand" FontSize="Medium" Placeholder="E-Mail" x:Name="EmailEntry"/>
+			</StackLayout>
+			<StackLayout Orientation="Horizontal" VerticalOptions="Start">
+				<Label Text="Username:"
+                VerticalOptions="Start" VerticalTextAlignment="Center" FontSize="Medium"
+					   HorizontalOptions="Start" />
+				<Entry HorizontalOptions="FillAndExpand" FontSize="Medium" Placeholder="Username" x:Name="UserEntry"/>
+			</StackLayout>
+			<StackLayout Orientation="Horizontal" VerticalOptions="Start">
+				<Label Text="User Type:"
+                VerticalOptions="Start" VerticalTextAlignment="Center" FontSize="Medium"
+					   HorizontalOptions="Start" />
+				<Picker HorizontalOptions="FillAndExpand" FontSize="Medium" x:Name="UserTypePicker"/>
+			</StackLayout>
+			<StackLayout Orientation="Horizontal" VerticalOptions="Start">
+				<Label Text="First Name:"
+                VerticalOptions="Start" VerticalTextAlignment="Center" FontSize="Medium"
+					   HorizontalOptions="Start" />
+				<Entry HorizontalOptions="FillAndExpand" FontSize="Medium" Placeholder="Optional" x:Name="FirstNameEntry"/>
+			</StackLayout>
+			<StackLayout Orientation="Horizontal" VerticalOptions="Start">
+				<Label Text="Last Name:"
+                VerticalOptions="Start" VerticalTextAlignment="Center" FontSize="Medium"
+					   HorizontalOptions="Start" />
+				<Entry HorizontalOptions="FillAndExpand" FontSize="Medium" Placeholder="Optional" x:Name="LastNameEntry"/>
+			</StackLayout>
+			<Button VerticalOptions="End" HorizontalOptions="FillAndExpand" Text="Update My Info" x:Name="AddButton" Clicked="UpdateClicked"/>
+			<Button VerticalOptions="End" HorizontalOptions="FillAndExpand" Text="Delete" x:Name="DeleteButton" Clicked="DeleteClicked"/>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

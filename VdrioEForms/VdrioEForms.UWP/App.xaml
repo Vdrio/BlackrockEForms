@@ -1,0 +1,20 @@
+﻿<Application
+    x:Class="VdrioEForms.UWP.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:VdrioEForms.UWP"
+    RequestedTheme="Light">
+	<Application.Resources>
+		<ResourceDictionary>
+			<Color x:Key="SystemAccentColor">#b5211c</Color>
+			<Color x:Key="SystemColor">#b5211c</Color>
+			<SolidColorBrush x:Key="SystemControlHighlightTransparentBrush" Color="#b5211c"></SolidColorBrush>
+
+			<Style TargetType="ToggleSwitch">
+				<Setter Property="OnContent" Value=""/>
+				<Setter Property="OffContent" Value=""/>
+			</Style>
+		</ResourceDictionary>
+		
+	</Application.Resources>
+</Application>

@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VdrioEForms.EFMasterPage"
+				  MasterBehavior="Popover">
+    <MasterDetailPage.Master>
+		<ContentPage Title="Menu" Padding="0">
+			<ContentPage.Content>
+				<StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="#dddddd" Padding="0" Spacing="0">
+					<BoxView HeightRequest="20" x:Name="iOSBox" IsVisible="False"/>
+					<BoxView HeightRequest="3" BackgroundColor="White" HorizontalOptions="FillAndExpand"/>
+					<Image VerticalOptions="Start" Source="BlackrockLogo.png" HorizontalOptions="FillAndExpand" Margin="0"/>
+					<StackLayout Orientation="Vertical" Padding="0" Margin="0" VerticalOptions="Start" Spacing="0" BackgroundColor="#b5211c" x:Name="FillOutFormStack">
+						<BoxView HeightRequest="1" BackgroundColor="#888888" Margin="0"/>
+						<StackLayout Orientation="Horizontal" HeightRequest="55" Margin="0" Padding="0"  VerticalOptions="Start">
+							<Label x:Name="FillOutLabel" Text="Fill Out Form" FontSize="Large" TextColor="White" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center"
+						   HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
+							<Image x:Name="FillOutImage" HeightRequest="45" HorizontalOptions="Center" VerticalOptions="Center" Source="FillOutFormWhite.png" Margin="0,0,5,0"/>
+
+							<StackLayout.GestureRecognizers>
+								<TapGestureRecognizer Tapped="FillOutForm_Tapped"/>
+							</StackLayout.GestureRecognizers>
+
+						</StackLayout>
+						<BoxView HeightRequest="1" BackgroundColor="#888888" Margin="0" VerticalOptions="End"/>
+					</StackLayout>
+					<StackLayout Orientation="Vertical" Padding="0" Margin="0"  VerticalOptions="Start"  Spacing="0" x:Name="EditDataStack">
+						<StackLayout Orientation="Horizontal" HeightRequest="55" Margin="0" Padding="0" VerticalOptions="Start">
+							<Label x:Name="EditDataLabel" Text="Edit Form Data" FontSize="Large" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center"
+						   HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
+							<Image x:Name="EditDataImage" HeightRequest="45" HorizontalOptions="Center" VerticalOptions="Center" Source="EditDataBlack.png" Margin="0,0,5,0"/>
+
+							<StackLayout.GestureRecognizers>
+								<TapGestureRecognizer Tapped="EditData_Tapped"/>
+							</StackLayout.GestureRecognizers>
+
+						</StackLayout>
+						<BoxView HeightRequest="1" BackgroundColor="#888888" Margin="0" VerticalOptions="End"/>
+					</StackLayout>
+					<StackLayout Orientation="Vertical" Padding="0" Margin="0"   VerticalOptions="Start"  Spacing="0" x:Name="CreateFormStack">
+						<StackLayout Orientation="Horizontal" HeightRequest="55" Margin="0" Padding="0" VerticalOptions="Start">
+							<Label x:Name="CreateLabel" Text="Create Form" FontSize="Large" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center"
+						   HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
+							<Image x:Name="CreateImage" HeightRequest="45" HorizontalOptions="Center" VerticalOptions="Center" Source="CreateFormBlack.png" Margin="0,0,5,0"/>
+
+							<StackLayout.GestureRecognizers>
+								<TapGestureRecognizer Tapped="CreateForm_Tapped"/>
+							</StackLayout.GestureRecognizers>
+
+						</StackLayout>
+						<BoxView HeightRequest="1" BackgroundColor="#888888" Margin="0" VerticalOptions="End"/>
+					</StackLayout>
+					<StackLayout Orientation="Vertical" Padding="0" Margin="0"  Spacing="0" VerticalOptions="Start"   x:Name="EditFormStack">
+						<StackLayout Orientation="Horizontal" HeightRequest="55" Margin="0" Padding="0" VerticalOptions="Start">
+							<Label x:Name="EditLabel" Text="Edit Form" FontSize="Large" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center"
+						   HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
+							<Image x:Name="EditImage" HeightRequest="45" HorizontalOptions="Center" VerticalOptions="Center" Source="EditFormBlack.png" Margin="0,0,5,0"/>
+
+							<StackLayout.GestureRecognizers>
+								<TapGestureRecognizer Tapped="EditForm_Tapped"/>
+							</StackLayout.GestureRecognizers>
+
+						</StackLayout>
+						<BoxView HeightRequest="1" BackgroundColor="#888888" Margin="0" VerticalOptions="End"/>
+					</StackLayout>
+					<StackLayout Orientation="Vertical" Padding="0" Margin="0"  Spacing="0" VerticalOptions="Start"  x:Name="ExportDataStack">
+						<StackLayout Orientation="Horizontal" HeightRequest="55" Margin="0" Padding="0" VerticalOptions="Start">
+							<Label x:Name="ExportLabel" Text="Export Data" FontSize="Large" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center"
+						   HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
+							<Image Source="ExportBlack.png" x:Name="ExportImage" HeightRequest="45" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,5,0"/>
+
+							<StackLayout.GestureRecognizers>
+								<TapGestureRecognizer Tapped="ExportData_Tapped"/>
+							</StackLayout.GestureRecognizers>
+
+						</StackLayout>
+						<BoxView HeightRequest="1" BackgroundColor="#888888" Margin="0" VerticalOptions="End"/>
+					</StackLayout>
+					<StackLayout Orientation="Vertical" Padding="0" Margin="0" Spacing="0"  VerticalOptions="Start"  x:Name="UserManagementStack">
+						<StackLayout Orientation="Horizontal" HeightRequest="55" Margin="0" Padding="0" VerticalOptions="Start">
+							<Label x:Name="UserLabel" Text="Manage Users" FontSize="Large" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center"
+						   HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
+							<Image Source="UserBlack.png" x:Name="UserImage" HeightRequest="45" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,5,0"/>
+
+							<StackLayout.GestureRecognizers>
+								<TapGestureRecognizer Tapped="UserManagement_Tapped"/>
+							</StackLayout.GestureRecognizers>
+
+						</StackLayout>
+						<BoxView HeightRequest="1" BackgroundColor="#888888" Margin="0" VerticalOptions="End"/>
+					</StackLayout>
+					<Button HorizontalOptions="FillAndExpand" VerticalOptions="Start" Text="Logout" Clicked="LogoutClicked" HeightRequest="50"/>
+					<Label VerticalOptions="Start" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"
+						   Text="© 2019 Augmented Innovations, LLC" HeightRequest="30"/>
+				</StackLayout>
+			</ContentPage.Content>
+		</ContentPage>
+    </MasterDetailPage.Master>
+	<MasterDetailPage.Detail>
+		<ContentPage></ContentPage>
+	</MasterDetailPage.Detail>
+</MasterDetailPage>

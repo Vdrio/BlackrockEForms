@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VdrioEForms.UserManagement.ManageUsersPage"
+			 Title="Manage Users"
+			 BackgroundColor="#cdcdcd">
+    <ContentPage.Content>
+        <StackLayout>
+            <Button HorizontalOptions="FillAndExpand" Text="Edit My Info" x:Name="MyButton" Clicked="EditMyInfoClicked" />
+			<Button HorizontalOptions="FillAndExpand" Text="Add a User" x:Name="AddButton" Clicked="AddUserClicked"/>
+			<Button HorizontalOptions="FillAndExpand" Text="Edit a User" x:Name="EditButton" Clicked="EditUserClicked"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

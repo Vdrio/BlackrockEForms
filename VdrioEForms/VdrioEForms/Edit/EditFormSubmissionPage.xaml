@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VdrioEForms.Edit.EditFormSubmissionPage"
+			 Title="Edit Data"
+			 BackgroundColor="#cdcdcd">
+	<ContentPage.Content>
+		<StackLayout VerticalOptions="FillAndExpand" Orientation="Vertical" BackgroundColor="#cdcdcd">
+			<ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" x:Name="ContentScroll">
+				<StackLayout x:Name="MainStack" Orientation="Vertical" VerticalOptions="FillAndExpand"/>
+			</ScrollView>
+			<Button x:Name="SubmitButton" Text="Submit Changes" HorizontalOptions="FillAndExpand" VerticalOptions="End" Padding="0" Margin="0" Clicked="UpdateDataClicked"/>
+			<Button x:Name="DeleteRestoreButton" Text="Delete Submission" HorizontalOptions="FillAndExpand" VerticalOptions="End" Padding="0" Margin="0" Clicked="DeleteDataClicked"/>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

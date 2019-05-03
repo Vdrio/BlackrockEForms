@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VdrioEForms.App"
+			 xmlns:buttons="clr-namespace:VdrioEForms.Filters">
+    <Application.Resources>
+		<Style TargetType="Label">
+			<Setter Property="TextColor" Value="Black" />
+		</Style>
+		<Style TargetType="Button">
+			<Setter Property="TextColor">
+				<Setter.Value>
+					<OnPlatform iOS="White" Android="White" UWP="White"/>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="BackgroundColor" >
+				<Setter.Value>
+					<OnPlatform iOS="#b5211c" Android="#b5211c" UWP="#b5211c"/>
+				</Setter.Value>
+			</Setter>
+
+		</Style>
+		<Style TargetType="buttons:RemoveFilterButton">
+			<Setter Property="TextColor">
+				<Setter.Value>
+					<OnPlatform iOS="White" Android="White" UWP="White"/>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="BackgroundColor" >
+				<Setter.Value>
+					<OnPlatform iOS="#b5211c" Android="#b5211c" UWP="#b5211c"/>
+				</Setter.Value>
+			</Setter>
+
+		</Style>
+		<Style TargetType="NavigationPage">
+			<Setter Property="BarBackgroundColor" Value="#000000"/>
+			<Setter Property="BarTextColor" Value="White"/>
+		</Style>
+		<Style TargetType="TabbedPage">
+			<Setter Property="BarBackgroundColor" Value="#000000"/>
+			<Setter Property="BarTextColor" Value="White"/>
+		</Style>
+		<Style TargetType="Switch">
+			<Setter Property="OnColor">
+				<OnPlatform iOS="#b5211c"/>
+			</Setter>
+		</Style>
+		
+	</Application.Resources>
+</Application>
