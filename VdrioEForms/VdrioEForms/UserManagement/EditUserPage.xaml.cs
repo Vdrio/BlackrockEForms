@@ -25,6 +25,7 @@ namespace VdrioEForms.UserManagement
         {
             Users = await AzureTableManager.GetAllUsers(ShowDeletedSwitch.IsToggled);
             Users = Users.FindAll(x => x.RowKey != LoginPage.CurrentUser.RowKey);
+            Users = Users.FindAll(x => x.UserType != 2);
             UserPicker.Items?.Clear();
             foreach(EFUser u in Users)
             {
