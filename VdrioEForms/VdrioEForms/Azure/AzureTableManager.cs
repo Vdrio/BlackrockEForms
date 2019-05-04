@@ -227,6 +227,7 @@ namespace VdrioEForms.Azure
             try
             {
                 await userTable.CreateIfNotExistsAsync();
+                Debug.WriteLine("Azure updating user" + user.Email + ", " +user.UserName);
                 user.EncryptUser();
                 //user.PartitionKey = user.FirstName + user.LastName;
                 if (user.UserType == 3 || user.UserType == 4)
@@ -238,11 +239,28 @@ namespace VdrioEForms.Azure
                     InitializeClientService();
                 }
                 List<EFUser> users = await GetAllUsers(true);
-                if (users.Find(x => x.RowKey!=user.RowKey&&(x.UserName == user.UserName || x.Email == user.Email)) != null)
+                users = users.FindAll(x => x.RowKey != user.RowKey);
+                if (users.Find(x=>x.Email == user.Email) != null)
                 {
+
                     Debug.WriteLine("Username or email taken");
                     return null;
                 }
+                if (!string.IsNullOrEmpty(user.UserName))
+                {
+                    if (users.Find(x => x.UserName == user.UserName)!=null)
+                    {
+                        Debug.WriteLine(user.UserName);
+                        Debug.WriteLine("Username or email taken");
+                        return null;
+                    }
+                        
+                }
+                /*if (users.Find(x => x.RowKey!=user.RowKey&&(x.UserName == user.UserName || x.Email == user.Email)&&!string.IsNullOrEmpty(user.UserName)) != null)
+                {
+                    Debug.WriteLine("Username or email taken");
+                    return null;
+                }*/
 
                 //user.Token = CreateSecureToken(6);
                 TableOperation operation = TableOperation.InsertOrReplace(user);

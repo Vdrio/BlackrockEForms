@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,8 @@ namespace VdrioEForms.UserManagement
         public EditUserPage()
         {
             InitializeComponent();
+            UserPicker.SelectedIndexChanged += SelectedUserChanged;
+
             LoadUserPicker();
         }
 
@@ -31,17 +34,18 @@ namespace VdrioEForms.UserManagement
             {
                 UserPicker.Items.Add(u.Email);
             }
-            UserPicker.SelectedIndexChanged -= SelectedUserChanged;
-            UserPicker.SelectedIndexChanged += SelectedUserChanged;
+
             UserPicker.SelectedIndex = 0;
         }
 
         void SelectedUserChanged(object sender, EventArgs e)
         {
+            Debug.WriteLine("User change detected");
             if (UserPicker.SelectedIndex >= 0)
                 SelectedUser = Users[UserPicker.SelectedIndex];
             else
                 return;
+            Debug.WriteLine("to" + SelectedUser.UserName);
             LoadPicker();
         }
 
@@ -70,13 +74,25 @@ namespace VdrioEForms.UserManagement
             {
                 UserEntry.Text = SelectedUser.UserName;
             }
+            else
+            {
+                UserEntry.Text = "";
+            }
             if (!string.IsNullOrEmpty(SelectedUser.LastName))
             {
                 LastNameEntry.Text = SelectedUser.LastName;
             }
+            else
+            {
+                LastNameEntry.Text = "";
+            }
             if (!string.IsNullOrEmpty(SelectedUser.FirstName))
             {
                 FirstNameEntry.Text = SelectedUser.FirstName;
+            }
+            else
+            {
+                FirstNameEntry.Text = "";
             }
             if (SelectedUser.Deleted)
             {
@@ -93,6 +109,8 @@ namespace VdrioEForms.UserManagement
             AddButton.IsEnabled = false;
             DeleteButton.IsEnabled = false;
             int userType = UserTypePicker.SelectedIndex;
+            Debug.WriteLine("User updating:" + SelectedUser.Email + ", "
+                + SelectedUser.UserName);
             if (SelectedUser.UserType == 4)
             {
                 userType += 3;
