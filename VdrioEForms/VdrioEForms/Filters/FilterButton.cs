@@ -81,16 +81,35 @@ namespace VdrioEForms.Filters
             Grid.SetRow(filtersLabel, 1);
             Grid.SetColumn(filtersLabel, 2);
             grid.Children.Add(filtersLabel);
-            filterButton = new Button { Text = "Filters", HorizontalOptions = LayoutOptions.FillAndExpand, Margin = 0, VerticalOptions= LayoutOptions.FillAndExpand, Padding = 0 };
-            filterButton.Clicked += AddFiltersClicked;
-            Grid.SetRow(filterButton, 0);
-            Grid.SetRowSpan(filterButton, 3);
-            Grid.SetColumn(filterButton, 0);
-            grid.Children.Add(filterButton);
+            //filterButton = new Button { Text = "Filters", HorizontalOptions = LayoutOptions.FillAndExpand, Margin = 0, VerticalOptions= LayoutOptions.FillAndExpand, Padding = 0 };
+            //filterButton.Clicked += AddFiltersClicked;
+            StackLayout filterLabelStack = new StackLayout { HorizontalOptions = LayoutOptions.FillAndExpand, Margin = 0, VerticalOptions = LayoutOptions.FillAndExpand, Padding = 0, Spacing = 0, BackgroundColor = new Button().BackgroundColor };
+            Label filterTextLabel = new Label
+            {
+                Text = "Filters",
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalTextAlignment = TextAlignment.Center,
+                VerticalTextAlignment = TextAlignment.Center,
+                TextColor = Color.White,
+                FontAttributes = FontAttributes.Bold
+            };
+            TapGestureRecognizer g = new TapGestureRecognizer();
+            g.Tapped += AddFiltersClicked;
+            filterLabelStack.GestureRecognizers.Add(g);
+            filterLabelStack.Children.Add(filterTextLabel);
+            //Grid.SetRow(filterButton, 0);
+            //Grid.SetRowSpan(filterButton, 3);
+            //Grid.SetColumn(filterButton, 0);
+            //grid.Children.Add(filterButton);
+            grid.Children.Add(filterLabelStack);
+            Grid.SetRow(filterLabelStack, 0);
+            Grid.SetRowSpan(filterLabelStack, 3);
+            Grid.SetColumn(filterLabelStack, 0);
             //Grid.SetRowSpan(filterButton, 3);
             //Children.Add(filterButton);
             Children.Add(grid);
-            filterButtons.Add(this);
+            //filterButtons.Add(this);
 
         }
 

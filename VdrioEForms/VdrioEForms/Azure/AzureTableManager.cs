@@ -155,6 +155,15 @@ namespace VdrioEForms.Azure
                 InitializeClientService();
             }
             EFUser u = await GetUser("", email);
+            if (u == null)
+            {
+                return null;
+            }
+            if (!string.IsNullOrEmpty(u?.Password))
+            {
+                return null;
+            }
+
             u.UserName = userName;
             u.FirstName = firstName;
             u.LastName = lastName;
