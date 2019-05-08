@@ -234,4 +234,10 @@
   <ItemGroup>
     <BundleResource Include="Resources\AppIcon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\PendingIconBlack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\PendingIconWhite.png" />
+  </ItemGroup>
 </Project>

@@ -21,7 +21,7 @@ namespace VdrioEForms.Filters
         {
             List<EFForm> sortedSubs = new List<EFForm>();
              
-            if (sorter.Entry.EntryType == 1)
+            if (sorter.Entry.EntryType == 1 || sorter.Entry.EntryType == 8)
             {
                 Dictionary<string, float> values = new Dictionary<string, float>();
                 foreach (EFForm f in submissions)

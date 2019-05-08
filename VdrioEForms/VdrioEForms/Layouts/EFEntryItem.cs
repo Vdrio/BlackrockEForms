@@ -26,6 +26,10 @@ namespace VdrioEForms.Layouts
         {
             fileNames = new List<string>();
             dataEntry = entry;
+            if (input == "N/A")
+            {
+                input = "";
+            }
             if (entry.EntryType == 0)
             {
                 Debug.WriteLine("Adding alphanumeric entry");
@@ -142,7 +146,7 @@ namespace VdrioEForms.Layouts
                 p.SelectedItem = input;
                 entry.EntryData = input;
             }
-            else
+            else if (entry.Selections != null && entry.Selections.Count>0)
             {
                 p.SelectedItem = entry.Selections[0];
                 entry.EntryData = entry.Selections[0];

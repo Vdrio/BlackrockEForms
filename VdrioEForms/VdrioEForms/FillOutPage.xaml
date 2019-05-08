@@ -22,6 +22,8 @@
 				<StackLayout x:Name="MainStack" Orientation="Vertical" VerticalOptions="FillAndExpand"/>
 			</ScrollView>
 			<Button Text="Submit" HorizontalOptions="FillAndExpand" VerticalOptions="End" Padding="0" Margin="0" Clicked="AddDataClicked" x:Name="SubmitButton"/>
+			<Button Text="Save For Later" HorizontalOptions="FillAndExpand" VerticalOptions="End" Padding="0" Margin="0" Clicked="SaveDataClicked" x:Name="SaveButton"/>
+
 		</StackLayout>
     </ContentPage.Content>
 </ContentPage>

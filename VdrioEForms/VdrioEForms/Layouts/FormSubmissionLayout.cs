@@ -93,7 +93,7 @@ namespace VdrioEForms.Layouts
                     , FontAttributes = FontAttributes.Bold, HorizontalOptions = LayoutOptions.FillAndExpand, HorizontalTextAlignment = TextAlignment.Center,
                     LineBreakMode = LineBreakMode.WordWrap};
                 l.WidthRequest = 150;
-                if (e.EntryType == 1 && !string.IsNullOrEmpty(e.Units))
+                if ((e.EntryType == 1 || e.EntryType == 8) && !string.IsNullOrEmpty(e.Units) && e.Units != "N/A")
                 {
                     l.Text += " (" + e.Units + ")";
                 }
@@ -172,7 +172,7 @@ namespace VdrioEForms.Layouts
                     //e.DecryptEntry();
                     if (string.IsNullOrEmpty(e.EntryData))
                     {
-                        e.EntryData = "-";
+                        e.EntryData = "";
                     }
                 }
                 List<EFEntry> EntriesToLoad;

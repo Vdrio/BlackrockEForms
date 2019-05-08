@@ -50,7 +50,7 @@ namespace VdrioEForms.Azure
         public static async void GetSubTables()
         {
             List<EFForm> forms = await GetAllForms();
-            foreach(EFForm f in forms)
+            foreach (EFForm f in forms)
             {
                 CloudTable c;
                 if (IsAppTester)
@@ -61,7 +61,7 @@ namespace VdrioEForms.Azure
                 {
                     c = tableClient.GetTableReference(f.FormName.Replace(" ", "") + "Table");
                 }
-                
+
                 await c.CreateIfNotExistsAsync();
                 formSubTables.Add(c);
             }
@@ -69,8 +69,12 @@ namespace VdrioEForms.Azure
 
         public static async void CreateIfNotExistAllTables()
         {
-            await formTable.CreateIfNotExistsAsync();
-            await userTable.CreateIfNotExistsAsync();
+            try
+            {
+                await formTable.CreateIfNotExistsAsync();
+                await userTable.CreateIfNotExistsAsync();
+            }
+            catch { }
         }
 
         public static async Task<EFUser> Login(string userEntry, string password, bool retrying = false)
@@ -80,7 +84,7 @@ namespace VdrioEForms.Azure
                 InitializeClientService();
             }
             CurrentUsers = await GetAllUsers();
-            foreach(EFUser u in CurrentUsers)
+            foreach (EFUser u in CurrentUsers)
             {
                 u.DecryptUser();
             }
@@ -91,56 +95,75 @@ namespace VdrioEForms.Azure
                 {
                     if (user.Password == password && user.Active && !user.Deleted)
                     {
-                        
+
                         user.DecryptUser();
+                        if (user.UserType >= 3)
+                        {
+                            InitializeAppTesterService();
+                        }
                         return await GetUser("", userEntry);
+                    }
+                    else if (user.Deleted)
+                    {
+                        LoginPage.SavedInfo.LastUser = null;
+                        LoginPage.Storage.UpdateSettings(LoginPage.SavedInfo);
                     }
                 }
                 else
                 {
-                    
+
                     return user;
                 }
             }
             else
             {
                 user = CurrentUsers.Find(x => x.UserName == userEntry);
-                
+
                 if (user != null)
-                {               
+                {
                     if (user.Password == password && user.Active && !user.Deleted)
                     {
-                     
+
                         user.DecryptUser();
+                        if (user.UserType >= 3)
+                        {
+                            InitializeAppTesterService();
+                        }
                         return await GetUser(userEntry);
+                    }
+                    else if (user.Deleted)
+                    {
+                        LoginPage.SavedInfo.LastUser = null;
+                        LoginPage.Storage.UpdateSettings(LoginPage.SavedInfo);
                     }
                 }
             }
-            if (!retrying)
-            {
-                if (IsAppTester)
-                {
-                    InitializeClientService();
-                }
-                else
-                {
-                    InitializeAppTesterService();
-                }
-                return await Login(userEntry, password, true);
-            }
-            else
-            {
-                if (IsAppTester)
-                {
-                    InitializeClientService();
-                }
-                else
-                {
-                    InitializeAppTesterService();
-                }
-                return null;
-            }
-            
+            return null;
+            /* if (!retrying)
+             {
+                 if (IsAppTester)
+                 {
+                     InitializeClientService();
+                 }
+                 else
+                 {
+                     InitializeAppTesterService();
+                 }
+                 return await Login(userEntry, password, true);
+             }
+             else
+             {
+                 if (IsAppTester)
+                 {
+                     InitializeClientService();
+                 }
+                 else
+                 {
+                     InitializeAppTesterService();
+                 }
+                 return null;
+             }*/
+
         }
 
         public static void RequestSetup()
@@ -148,7 +171,7 @@ namespace VdrioEForms.Azure
 
         }
 
-        public static async Task<EFUser> Setup(string email,string userName, string firstName, string lastName, string password, string confirmPassword)
+        public static async Task<EFUser> Setup(string email, string userName, string firstName, string lastName, string password, string confirmPassword)
         {
             if (!Initialized)
             {
@@ -175,7 +198,7 @@ namespace VdrioEForms.Azure
         public static async Task<List<EFUser>> GetAllUsers(bool includeInactive = false)
         {
             Debug.WriteLine("Getting all users for ya");
-            if (!Initialized )
+            if (!Initialized)
             {
                 InitializeClientService();
             }
@@ -214,10 +237,10 @@ namespace VdrioEForms.Azure
                             users.Add(u);
                         }
                     }
-                    
+
                 } while (token != null);
                 Debug.WriteLine("Users found: " + users.Count);
-                
+
                 return users;
             }
             catch (Exception ex)
@@ -236,7 +259,7 @@ namespace VdrioEForms.Azure
             try
             {
                 await userTable.CreateIfNotExistsAsync();
-                Debug.WriteLine("Azure updating user" + user.Email + ", " +user.UserName);
+                Debug.WriteLine("Azure updating user" + user.Email + ", " + user.UserName);
                 user.EncryptUser();
                 //user.PartitionKey = user.FirstName + user.LastName;
                 if (user.UserType == 3 || user.UserType == 4)
@@ -249,7 +272,7 @@ namespace VdrioEForms.Azure
                 }
                 List<EFUser> users = await GetAllUsers(true);
                 users = users.FindAll(x => x.RowKey != user.RowKey);
-                if (users.Find(x=>x.Email == user.Email) != null)
+                if (users.Find(x => x.Email.ToUpper() == user.Email.ToUpper()) != null)
                 {
 
                     Debug.WriteLine("Username or email taken");
@@ -257,13 +280,13 @@ namespace VdrioEForms.Azure
                 }
                 if (!string.IsNullOrEmpty(user.UserName))
                 {
-                    if (users.Find(x => x.UserName == user.UserName)!=null)
+                    if (users.Find(x => x.UserName.ToUpper() == user.UserName.ToUpper()) != null)
                     {
                         Debug.WriteLine(user.UserName);
                         Debug.WriteLine("Username or email taken");
                         return null;
                     }
-                        
+
                 }
                 /*if (users.Find(x => x.RowKey!=user.RowKey&&(x.UserName == user.UserName || x.Email == user.Email)&&!string.IsNullOrEmpty(user.UserName)) != null)
                 {
@@ -285,7 +308,7 @@ namespace VdrioEForms.Azure
 
         public static async Task<EFUser> GetUser(string userName = "", string email = "", bool retrying = false)
         {
-            
+
             Debug.WriteLine("Getting a user");
             string id;
             if (string.IsNullOrEmpty(userName))
@@ -316,7 +339,7 @@ namespace VdrioEForms.Azure
                 TableContinuationToken token = null;
                 List<EFUser> users = await GetAllUsers(true);
                 EFUser u = users.Find(x => x.UserName == id || x.Email == id);
-                if (u!= null)
+                if (u != null)
                 {
                     return u;
                 }
@@ -367,7 +390,7 @@ namespace VdrioEForms.Azure
             {
                 TableQuery<EFForm> query;
                 query = new TableQuery<EFForm>();
-                
+
 
                 TableContinuationToken token = null;
                 List<EFForm> forms = new List<EFForm>();
@@ -394,11 +417,13 @@ namespace VdrioEForms.Azure
                 {
                     Debug.WriteLine("Found a form: " + f.FormName);
                 }
+                LoginPage.SavedInfo.SavedMainForms = forms;
+                LoginPage.Storage.UpdateSettings(LoginPage.SavedInfo);
                 return forms;
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Unable to get all users: " + ex);
+                Debug.WriteLine("Unable to get all forms: " + ex);
                 return null;
             }
         }
@@ -410,7 +435,7 @@ namespace VdrioEForms.Azure
             {
                 InitializeClientService();
             }
-            if(LoginPage.CurrentUser.UserType == 2)
+            if (LoginPage.CurrentUser.UserType == 2)
             {
                 InitializeClientService();
             }
@@ -440,7 +465,7 @@ namespace VdrioEForms.Azure
                     foreach (EFForm f in tableEntities.Results)
                     {
                         f.DecryptForm();
-                        foreach(EFEntry e in f.Entries)
+                        foreach (EFEntry e in f.Entries)
                         {
                             e.DecryptEntry();
                         }
@@ -452,7 +477,7 @@ namespace VdrioEForms.Azure
 
                 } while (token != null);
 
-                forms = forms.OrderByDescending(f=>f.TimeInTicks).ToList();
+                forms = forms.OrderByDescending(f => f.TimeInTicks).ToList();
                 return forms;
             }
             catch (Exception ex)
@@ -473,25 +498,32 @@ namespace VdrioEForms.Azure
                 //await userTable.CreateIfNotExistsAsync();
                 user.EncryptUser();
                 user.RowKey = Guid.NewGuid().ToString();
-                user.PartitionKey = user.FirstName+user.LastName;
+                user.PartitionKey = user.FirstName + user.LastName;
 
-                    List<EFUser> users = await GetAllUsers();
-                if (users.Find(x=>x.UserName == user.UserName || x.Email == user.Email) != null)
+                List<EFUser> users = await GetAllUsers();
+                if (users == null)
+                {
+                    users = new List<EFUser>();
+                }
+                if (users.Find(x => x.UserName.ToUpper() == user.UserName.ToUpper() || x.Email.ToUpper() == user.Email.ToUpper()) != null)
                 {
                     Debug.WriteLine("User already exists");
                     return null;
                 }
+                TableOperation operation = TableOperation.Insert(user);
+                TableResult result = await userTable.ExecuteAsync(operation);
                 if (user.UserType == 3 || user.UserType == 4)
                 {
                     InitializeAppTesterService();
+                    operation = TableOperation.Insert(user);
+                    result = await userTable.ExecuteAsync(operation);
                 }
                 else
                 {
                     InitializeClientService();
                 }
                 //user.Token = CreateSecureToken(6);
-                TableOperation operation = TableOperation.Insert(user);
-                TableResult result = await userTable.ExecuteAsync(operation);
+
                 return await GetUser(user.Email);
             }
             catch (Exception ex)
@@ -510,7 +542,7 @@ namespace VdrioEForms.Azure
             try
             {
                 await formTable.CreateIfNotExistsAsync();
-                form.RowKey = Guid.NewGuid().ToString();             
+                form.RowKey = Guid.NewGuid().ToString();
                 form.TableName = form.FormName.Replace(" ", "") + "Table";
                 form.PartitionKey = form.TableName;
                 //Debug.WriteLine("Table Name: " + form.TableName);
@@ -552,11 +584,12 @@ namespace VdrioEForms.Azure
             try
             {
                 await userTable.CreateIfNotExistsAsync();
-                form.EncryptForm();
 
+
+
+                form.EncryptForm();
                 CloudTable c = tableClient.GetTableReference(form.TableName);
                 await c.CreateIfNotExistsAsync();
-
                 //user.Token = CreateSecureToken(6);
                 TableOperation operation = TableOperation.InsertOrReplace(form);
                 TableResult result = await formTable.ExecuteAsync(operation);
@@ -578,7 +611,12 @@ namespace VdrioEForms.Azure
             }
             try
             {
-                await userTable.CreateIfNotExistsAsync();
+                if (string.IsNullOrEmpty(form.TableName))
+                    form.TableName = form.FormName.Replace(" ", "") + "Table";
+                if (string.IsNullOrEmpty(form.PartitionKey))
+                    form.PartitionKey = LoginPage.CurrentUser.FirstName.Replace(" ", "") + LoginPage.CurrentUser.LastName.Replace(" ", "") + "Submissions";
+                Debug.WriteLine(form.PartitionKey);
+                form.TableName = form.TableName.Replace(" ", "");
                 form.EncryptForm();
 
                 CloudTable c = tableClient.GetTableReference(form.TableName);
@@ -606,10 +644,11 @@ namespace VdrioEForms.Azure
             try
             {
                 await userTable.CreateIfNotExistsAsync();
-                form.EncryptForm();
                 form.RowKey = Guid.NewGuid().ToString();
                 form.PartitionKey = LoginPage.CurrentUser.FirstName.Replace(" ", "") + LoginPage.CurrentUser.LastName.Replace(" ", "") + "Submissions";
-                form.TimeInTicks = DateTime.Now.Ticks;
+                if (form.TimeInTicks <= 0)
+                    form.TimeInTicks = DateTime.Now.Ticks;
+                form.EncryptForm();
                 Debug.WriteLine(form.TableName);
                 CloudTable c = tableClient.GetTableReference(form.TableName);
                 await c.CreateIfNotExistsAsync();
@@ -632,57 +671,7 @@ namespace VdrioEForms.Azure
             }
         }
 
-        readonly static CloudStorageAccount _cloudStorageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=bwltestingstorage;AccountKey=c/FpR400/p36lqlnjtpuykzlvmNKNCrW5pVkVa7giiZppRUQdGa3+UNmKdO0lH/5Bot1r2hDicqEmpV2oaR4eg==;EndpointSuffix=core.windows.net");
-        readonly static CloudBlobClient _blobClient = _cloudStorageAccount.CreateCloudBlobClient();
-        public static async Task<List<T>> GetBlobs<T>(string containerName, string prefix = "", int? maxresultsPerQuery = null, BlobListingDetails blobListingDetails = BlobListingDetails.None) where T : ICloudBlob
-        {
-            var blobContainer = _blobClient.GetContainerReference(containerName);
 
-            var blobList = new List<T>();
-            BlobContinuationToken continuationToken = null;
-
-            try
-            {
-                do
-                {
-                    var response = await blobContainer.ListBlobsSegmentedAsync(prefix, true, blobListingDetails, maxresultsPerQuery, continuationToken, null, null);
-
-                    continuationToken = response?.ContinuationToken;
-
-                    foreach (var blob in response?.Results?.OfType<T>())
-                    {
-                        blobList.Add(blob);
-
-                    }
-
-                } while (continuationToken != null);
-            }
-            catch (Exception ex)
-            {
-
-                //Handle Exception
-            }
-
-            return blobList;
-        }
-
-        public static async Task<CloudBlockBlob> SaveBlockBlob(string containerName, byte[] blob, string blobTitle)
-        {
-            var blobContainer = _blobClient.GetContainerReference(containerName);
-            if ((await GetBlobs<CloudBlockBlob>("documents")).Where(x => x.Name == blobTitle).ToList().Count > 0)
-            {
-                Debug.WriteLine("this file already exists");
-                return null;
-            }
-            else
-            {
-                var blockBlob = blobContainer.GetBlockBlobReference(blobTitle);
-                await blockBlob.UploadFromByteArrayAsync(blob, 0, blob.Length);
-
-                return blockBlob;
-            }
-
-        }
 
 
     }

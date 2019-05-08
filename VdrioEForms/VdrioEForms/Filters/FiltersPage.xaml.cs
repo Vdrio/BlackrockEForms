@@ -137,7 +137,7 @@ namespace VdrioEForms.Filters
                 EntryPicker.SelectedIndexChanged += DataEntrySelected;
                 EntryPicker.Items.Add("User Created");
                 EntryPicker.Items.Add("User Last Modified");
-                foreach (EFEntry f in selectedType.Entries)
+                foreach (EFEntry f in selectedType.Entries.FindAll(x=>x.EntryType <= 8))
                 {
                     EntryPicker.Items.Add(f.EntryName);
                 }

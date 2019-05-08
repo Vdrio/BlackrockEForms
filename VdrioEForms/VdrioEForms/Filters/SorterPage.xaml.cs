@@ -44,7 +44,7 @@ namespace VdrioEForms.Filters
             OrderPicker.Items.Add("Ascending");
             OrderPicker.SelectedIndex = 0;
             OrderPicker.SelectedIndexChanged += OrderChanged;
-            entriesToUse = MainForm.Entries.FindAll(x => x.EntryType == 1 || x.EntryType == 4 || x.EntryType == 5 || x.EntryType == 6);
+            entriesToUse = MainForm.Entries.FindAll(x => x.EntryType == 1 || x.EntryType == 4 || x.EntryType == 5 || x.EntryType == 6 || x.EntryType == 8);
             foreach (EFEntry e in entriesToUse)
             {
                 EntryPicker.Items.Add(e.EntryName);

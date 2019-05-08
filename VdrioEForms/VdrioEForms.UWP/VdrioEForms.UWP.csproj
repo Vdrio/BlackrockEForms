@@ -165,6 +165,8 @@
     <Content Include="ExportWhite.png" />
     <Content Include="FillOutFormBlack.png" />
     <Content Include="FillOutFormWhite.png" />
+    <Content Include="PendingIconBlack.png" />
+    <Content Include="PendingIconWhite.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="UserBlack.png" />
     <Content Include="UserWhite.png" />

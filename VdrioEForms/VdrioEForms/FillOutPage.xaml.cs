@@ -41,6 +41,15 @@ namespace VdrioEForms
         async void SetupFormPicker()
         {
             Forms = await AzureTableManager.GetAllForms();
+            if (Forms == null)
+            {
+                Forms = LoginPage.SavedInfo.SavedMainForms;
+                if (Forms == null)
+                {
+                    await DisplayAlert("Forms", "Unable to load forms to pick", "Ok");
+                    return;
+                }
+            }
             Forms = Forms.FindAll(x => !x.Deleted);
             if (FormPicker.Items.Count != 0)
                 FormPicker.Items.Clear();
@@ -80,6 +89,7 @@ namespace VdrioEForms
             if (await DisplayAlert("Confirmation", "Are you sure you want to add this data?", "Yes", "No"))
             {
                 SubmitButton.IsEnabled = false;
+                SaveButton.IsEnabled = false;
                 List<EFEntry> entries = new List<EFEntry>();
                 foreach (EFEntryItem d in (MainStack.Children[0] as StackLayout).Children)
                 {
@@ -108,6 +118,54 @@ namespace VdrioEForms
                 }
             }
             SubmitButton.IsEnabled = true;
+            SaveButton.IsEnabled = true;
         }
+
+        public async void SaveDataClicked(object sender, EventArgs e)
+        {
+            if (await DisplayAlert("Save", "Are you sure you want to save this data? This will not save file entries.", "Yes", "No"))
+            {
+                SubmitButton.IsEnabled = false;
+                SaveButton.IsEnabled = false;
+                List<EFEntry> entries = new List<EFEntry>();
+                foreach (EFEntryItem d in (MainStack.Children[0] as StackLayout).Children)
+                {
+
+
+                    if (d.dataEntry.EntryType == 9 || d.dataEntry.EntryType == 10 || d.dataEntry.EntryType == 11)
+                    {
+                        d.dataEntry.EntryData = "";
+                        Debug.WriteLine("blob type");
+                    }
+                    Debug.WriteLine(d.dataEntry.EntryData);
+                    d.dataEntry.EncryptEntry();
+                    entries.Add(d.dataEntry);
+                }
+                EFForm formToSubmit = new EFForm
+                {
+                    FormName = SelectedForm.FormName,
+                    Created = DateTime.Now,
+                    LastModified = DateTime.Now,
+                    Entries = entries,
+                    TableName = SelectedForm.TableName,
+                    OriginalUser = LoginPage.CurrentUser,
+                    LastModifiedUser = LoginPage.CurrentUser,
+                    TimeInTicks = DateTime.Now.Ticks
+                };
+                if (LoginPage.SavedInfo.PendingForms == null)
+                {
+                    LoginPage.SavedInfo.PendingForms = new List<EFForm>();
+                }
+                LoginPage.SavedInfo.PendingForms.Add(formToSubmit);
+                LoginPage.Storage.UpdateSettings(LoginPage.SavedInfo);
+                await DisplayAlert("Saved", "Form saved succesfully", "Ok");
+                SelectedFormChanged(sender, e);
+
+            }
+            SaveButton.IsEnabled = true;
+            SubmitButton.IsEnabled = true;
+        }
+
+        
     }
 }

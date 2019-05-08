@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -164,6 +165,16 @@ namespace VdrioEForms.Export
         async void SetupFormPicker()
         {
             Forms = await AzureTableManager.GetAllForms();
+            if (Forms == null)
+            {
+                Forms = LoginPage.SavedInfo.SavedMainForms;
+                if (Forms == null)
+                {
+                    await DisplayAlert("Forms", "Unable to load forms to pick", "Ok");
+                    return;
+                }
+                
+            }
             Forms = Forms.FindAll(x => !x.Deleted);
             if (FormPicker.Items.Count != 0)
                 FormPicker.Items.Clear();

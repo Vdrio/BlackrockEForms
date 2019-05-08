@@ -11,29 +11,43 @@ namespace VdrioEForms.EFForms
     [JsonObject]
     public class EFForm:TableEntity
     {
-        [JsonIgnore][IgnoreProperty]
-        public List<EFEntry> Entries { get; set; }
+        [JsonIgnore]
+        [IgnoreProperty]
+        public List<EFEntry> Entries { get { return entries; } set { entries = value; EntriesJson = JsonConvert.SerializeObject(entries); } }
+        [JsonIgnore]
+        private List<EFEntry> entries;
+        [IgnoreProperty]
+        public string EntriesJson { get; set; }
+        [JsonIgnore]
         public string EncryptedEntries { get; set; }
-        [JsonIgnore][IgnoreProperty]
+        [JsonIgnore]
+        [IgnoreProperty]
         public List<EFEntry> DeletedEntries { get; set; }
+        [JsonIgnore]
         public string EncryptedDeletedEntries { get; set; }
-        [JsonIgnore] [IgnoreProperty]
+        [IgnoreProperty]
         public string FormName { get; set; }
+        [JsonIgnore]
         public string EncryptedFormName { get; set; }
-        [JsonIgnore][IgnoreProperty]
+        [IgnoreProperty]
         public string TableName { get; set; }
+        [JsonIgnore]
         public string EncryptedTableName { get; set; }
-        [JsonIgnore] [IgnoreProperty]
+        [IgnoreProperty]
         public DateTime Created { get; set; }
+        [JsonIgnore]
         public string EncryptedCreated { get; set; }
-        [JsonIgnore][IgnoreProperty]
+        [IgnoreProperty]
         public DateTime LastModified { get; set; }
+        [JsonIgnore]
         public string EncryptedLastModified { get; set; }
-        [JsonIgnore][IgnoreProperty]
+        [IgnoreProperty]
         public EFUser OriginalUser { get; set; }
+        [JsonIgnore]
         public string EncryptedOriginalUser { get; set; }
-        [JsonIgnore] [IgnoreProperty]
+        [IgnoreProperty]
         public EFUser LastModifiedUser { get; set; }
+        [JsonIgnore]
         public string EncryptedLastModifiedUser { get; set; }
         public string Initializor { get; set; }
         public bool Deleted { get; set; }
@@ -45,6 +59,8 @@ namespace VdrioEForms.EFForms
             Initializor = AESEncryptor.CreateInitializor();
             Entries = new List<EFEntry>();
             DeletedEntries = new List<EFEntry>();
+            RowKey = Guid.NewGuid().ToString();
+
         }
 
         public void EncryptForm()

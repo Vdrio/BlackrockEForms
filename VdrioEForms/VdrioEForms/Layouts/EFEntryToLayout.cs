@@ -67,7 +67,7 @@ namespace VdrioEForms.Layouts
                     EFEntry entryToUse = form.Entries.Find(x => x.EntryID == e.EntryID);
                     if (entryToUse == null)
                     {
-                        entryToUse = new EFEntry { EntryID = e.EntryID,EntryType= e.EntryType, EntryName = e.EntryName, EntryData = "man set data" };
+                        entryToUse = new EFEntry { EntryID = e.EntryID,EntryType= e.EntryType, EntryName = e.EntryName, EntryData = "" };
                         entryToUse.EntryID = e.EntryID;
                         Debug.WriteLine("Proper ID: " + e.EntryID + "My ID: " + entryToUse.EntryID);
                     }

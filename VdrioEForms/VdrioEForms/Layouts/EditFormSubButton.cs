@@ -37,7 +37,7 @@ namespace VdrioEForms.Layouts
         public EFForm BaseForm;
         public async void OnClicked(object sender, EventArgs e)
         {
-            await EFMasterPage.MainPage.Detail.Navigation.PushAsync(new EditFormSubmissionPage(FormToEdit, BaseForm));
+            await EFMasterPage.MainPage.Detail.Navigation.PushAsync(new EditFormSubmissionPage(FormToEdit, BaseForm, (EFMasterPage.MainPage.Detail as NavigationPage).RootPage is PendingSubmissionsPage));
         }
     }
 }
